@@ -23,7 +23,7 @@ fn main() {
         x_points * y_points * z_points
     );
 
-    let start_point = [
+    let [x_start, y_start, z_start] = [
         origin_x - (x_points - 1) as f64 / 2. * args.resolution,
         origin_y - (y_points - 1) as f64 / 2. * args.resolution,
         origin_z,
@@ -33,9 +33,9 @@ fn main() {
     for z in 0..x_points {
         for y in 0..y_points {
             for x in 0..x_points {
-                let x = start_point[0] + x as f64 * args.resolution;
-                let y = start_point[1] + y as f64 * args.resolution;
-                let z = start_point[2] + z as f64 * args.resolution;
+                let x = x_start + x as f64 * args.resolution;
+                let y = y_start + y as f64 * args.resolution;
+                let z = z_start + z as f64 * args.resolution;
                 commands.push(Command::Move([x, y, z]));
                 commands.push(Command::Wait(config.pre_trigger_wait));
                 commands.push(Command::SpindleOn);
@@ -67,8 +67,8 @@ fn main() {
     }
 
     // Save the GCode to a file
-    std::fs::write(args.output.clone(), gcode).expect("Failed to write GCode file.");
-    println!("GCode saved to {}.", args.output)
+    std::fs::write(args.file_name.clone(), gcode).expect("Failed to write GCode file.");
+    println!("GCode saved to {}.", args.file_name)
 }
 
 #[derive(Parser, Debug)]
@@ -99,11 +99,12 @@ struct Args {
     )]
     origin: Vec<f64>,
     #[arg(
+        short = 'f',
         long,
         help = "The name of the file to save the GCode to. Defaults to protocol.nc.",
         default_value = "protocol.nc"
     )]
-    output: String,
+    file_name: String,
 }
 
 enum Command {
