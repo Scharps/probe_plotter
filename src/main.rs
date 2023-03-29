@@ -89,6 +89,7 @@ struct Args {
     #[arg(
         num_args = 3,
         required = true,
+        allow_hyphen_values = true,
         value_delimiter = ',',
         short,
         long,
