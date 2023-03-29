@@ -11,9 +11,9 @@ fn main() {
     )
     .expect("Failed to parse config file.");
 
-    let x_points = (space_x / args.resolution) as usize;
-    let y_points = (space_y / args.resolution) as usize;
-    let z_points = (space_z / args.resolution) as usize;
+    let x_points = (space_x / args.resolution) as usize + 1;
+    let y_points = (space_y / args.resolution) as usize + 1;
+    let z_points = (space_z / args.resolution) as usize + 1;
 
     println!(
         "Grid size: {} x {} x {}. {} points.",
@@ -37,6 +37,7 @@ fn main() {
                 let y = start_point[1] + y as f64 * args.resolution;
                 let z = start_point[2] + z as f64 * args.resolution;
                 commands.push(Command::Move([x, y, z]));
+                commands.push(Command::Wait(config.pre_trigger_wait));
                 commands.push(Command::SpindleOn);
                 commands.push(Command::Wait(config.wait_time));
                 commands.push(Command::SpindleOff);
@@ -108,4 +109,5 @@ enum Command {
 #[derive(Deserialize, Debug)]
 struct Configuration {
     wait_time: f64,
+    pre_trigger_wait: f64,
 }

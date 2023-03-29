@@ -1,3 +1,4 @@
 Configuration(
     wait_time: 0.5,
+    pre_trigger_wait: 0.5,
 )
