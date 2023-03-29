@@ -67,7 +67,8 @@ fn main() {
     }
 
     // Save the GCode to a file
-    std::fs::write("protocol.nc", gcode).unwrap();
+    std::fs::write(args.output.clone(), gcode).expect("Failed to write GCode file.");
+    println!("GCode saved to {}.", args.output)
 }
 
 #[derive(Parser, Debug)]
@@ -97,6 +98,12 @@ struct Args {
         help = "The origin of the grid position at the center of the bottom of the volume as X Y Z."
     )]
     origin: Vec<f64>,
+    #[arg(
+        long,
+        help = "The name of the file to save the GCode to. Defaults to protocol.nc.",
+        default_value = "protocol.nc"
+    )]
+    output: String,
 }
 
 enum Command {
