@@ -30,7 +30,7 @@ fn main() {
     ];
 
     let mut commands = vec![];
-    for z in 0..x_points {
+    for z in 0..z_points {
         for y in 0..y_points {
             for x in 0..x_points {
                 let x = x_start + x as f64 * args.resolution;
