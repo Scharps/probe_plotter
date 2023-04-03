@@ -120,6 +120,7 @@ enum SubCommand {
             num_args = 3,
             required = true,
             value_delimiter = ',',
+            allow_hyphen_values = true,
             short,
             long,
             help = "The origin coordinate as X Y Z."
